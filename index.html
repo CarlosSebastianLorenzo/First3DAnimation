@@ -29,7 +29,7 @@
         //Forma del objeto
         const geometry = new THREE.BoxGeometry(1,1,1);
         //Textura del objeto
-        const material = new THREE.MeshStandardMaterial( {color: 0x009900} );
+        const material = new THREE.MeshStandardMaterial( {color: 0x0000aa} );
         //Creamos el objeto con la forma y la textura
         const cube = new THREE.Mesh(geometry, material);
         //le indicamos al cubo que proyectara sombras
@@ -39,7 +39,7 @@
         //Añadimos el elemento que creamos a la escena
         scene.add(cube);
         //agregamos una luz de color blanco y una intensidad
-        const light = new THREE.DirectionalLight(0xffffff,1,10);
+        const light = new THREE.DirectionalLight(0xffffff,1,100);
         //posicionamos la luz
         light.position.set(1,1,2);
         //para que el navegador reconozca la luz le indicamos que esta genera sombras
@@ -47,7 +47,7 @@
         scene.add(light);
         //creamos un plano
         const planeGeometry = new THREE.PlaneGeometry(5,5,32,32);
-        const planeMaterial = new THREE.MeshStandardMaterial({color: 0x990000});
+        const planeMaterial = new THREE.MeshStandardMaterial({color: 0x990055});
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.receiveShadow = true;
         plane.position.set(0,0,0);
