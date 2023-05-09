@@ -23,27 +23,44 @@
         const renderer = new THREE.WebGLRenderer({alpha: true});
         //si pusieramos un div.innerWidth se renderizaría solo en ese div
         renderer.setSize(window.innerWidth, window.innerHeight);
+        // permitimos proyección de sombras
+        renderer.shadowMap.enabled = true;
         document.body.appendChild(renderer.domElement);
         //Forma del objeto
-        const geometry = new THREE.BoxGeometry();
+        const geometry = new THREE.BoxGeometry(1,1,1);
         //Textura del objeto
-        const material = new THREE.MeshBasicMaterial( {color: 0x009900} );
+        const material = new THREE.MeshStandardMaterial( {color: 0x009900} );
         //Creamos el objeto con la forma y la textura
         const cube = new THREE.Mesh(geometry, material);
+        //le indicamos al cubo que proyectara sombras
+        cube.castShadow = true;
         //posicionamos el cubo con respecto al eje de coordenadas
-        cube.position.y = 1
+        cube.position.set(0,0,1.5);
         //Añadimos el elemento que creamos a la escena
         scene.add(cube);
+        //agregamos una luz de color blanco y una intensidad
+        const light = new THREE.DirectionalLight(0xffffff,1,10);
+        //posicionamos la luz
+        light.position.set(1,1,2);
+        //para que el navegador reconozca la luz le indicamos que esta genera sombras
+        light.castShadow = true;
+        scene.add(light);
+        //creamos un plano
+        const planeGeometry = new THREE.PlaneGeometry(5,5,32,32);
+        const planeMaterial = new THREE.MeshStandardMaterial({color: 0x990000});
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
+        plane.position.set(0,0,0);
+        scene.add(plane);
         //creamos una grilla que va a servir de piso
         //primer valor es area total del piso
         //segundo valor cantidad de cuadrados en una linea
-        const grid = new THREE.GridHelper(20, 10);
-        scene.add(grid);
+        // const grid = new THREE.GridHelper(20, 10);
+        // scene.add(grid);
         //desplazamos la camara en el eje Z para que podamos ver el cubo que creamos 
         camera.position.z = 5;
-        camera.position.y = 2;
-        camera.rotation.y = -150;
-        camera.position.x = 5;
+        camera.position.y = -3;
+        camera.rotation.x = .5;
 
         //creamos una función para decirle al renderer que renderize fotograma a fotograma nuestra escena y nuestra camara
         function animate() {
@@ -52,6 +69,7 @@
             //creamos una rotación en el eje x y el eje y del cubo que se ejecutara en cada fotograma
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+            plane.rotation.z += 0.005;
         }
         //llamamos a la función que se va a estar ejecutando en cada fotograma
         animate();
