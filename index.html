@@ -9,8 +9,11 @@
 </head>
 <body>
     
-    <script src="three.js"></script>
-    <script>
+    <!-- <script src="three.js"></script> -->
+    <script type="module">
+        import * as THREE from './three.module.js';
+        import { OrbitControls } from './orbitcontrols.js';
+
         const scene = new THREE.Scene();
         //color del fondo (si no dejamos color de fondo y admimitos canal alpha el fondo será transparente)
         //scene.background = new  THREE.Color(0x222222)
@@ -61,6 +64,8 @@
         camera.position.z = 5;
         camera.position.y = -3;
         camera.rotation.x = .5;
+
+        const controls = new OrbitControls(camera, renderer.domElement);
 
         //creamos una función para decirle al renderer que renderize fotograma a fotograma nuestra escena y nuestra camara
         function animate() {
