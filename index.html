@@ -64,9 +64,8 @@
         camera.position.z = 5;
         camera.position.y = -3;
         camera.rotation.x = .5;
-
+        let boollean = 1;
         const controls = new OrbitControls(camera, renderer.domElement);
-
         //creamos una función para decirle al renderer que renderize fotograma a fotograma nuestra escena y nuestra camara
         function animate() {
             requestAnimationFrame(animate);
@@ -74,6 +73,10 @@
             //creamos una rotación en el eje x y el eje y del cubo que se ejecutara en cada fotograma
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+            let z = cube.position.z;
+            if(z>3){boollean = false};
+            if(z<1){boollean = true};
+            boollean ? cube.position.z +=0.01 : cube.position.z -= 0.01;
             plane.rotation.z += 0.005;
         }
         //llamamos a la función que se va a estar ejecutando en cada fotograma
